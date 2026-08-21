@@ -1,0 +1,12 @@
+{
+  // Static Astro build deployed as an assets-only Worker.
+  // This file must exist and be committed: without it, `wrangler deploy`
+  // decides the project is unconfigured and runs its interactive setup
+  // (`astro add cloudflare` + `pnpm add -D wrangler`) during the build,
+  // which is what was failing in CI.
+  "name": "conservation",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}
