@@ -1,0 +1,147 @@
+/* ============================================================
+   TIER 3: COMPONENT TOKENS — Maps semantics to components
+   ============================================================
+   
+   🎯 MENTAL MODEL:
+   This is the layer components actually consume.
+   
+   A <Button> uses var(--button-bg), NOT var(--color-primary).
+   Why? Because if you later decide buttons should use the 
+   secondary color, you change it HERE — not in 50 button instances.
+   
+   RULE: Every CSS property in a component that uses color,
+   spacing, radius, or shadow MUST reference a token from this file.
+   ============================================================ */
+
+:root {
+  /* ──────────────────────────────────────────────────────────
+     BUTTON TOKENS
+     ────────────────────────────────────────────────────────── */
+  --button-bg: var(--color-primary);
+  --button-text: var(--color-on-primary);
+  --button-hover-bg: var(--primary-50);
+  --button-active-bg: var(--primary-30);
+  --button-radius: var(--radius-full);
+  --button-padding-x: var(--space-lg);
+  --button-padding-y: var(--space-sm);
+  --button-font-size: var(--font-size-sm);
+  --button-font-weight: var(--font-weight-semibold);
+  --button-shadow: var(--shadow-md);
+  --button-transition: var(--duration-fast) var(--ease-standard);
+
+  /* Outline button variant */
+  --button-outline-bg: transparent;
+  --button-outline-text: var(--color-primary);
+  --button-outline-border: var(--color-primary);
+  --button-outline-hover-bg: var(--color-primary-container);
+
+  /* ──────────────────────────────────────────────────────────
+     CARD TOKENS
+     ────────────────────────────────────────────────────────── */
+  --card-bg: var(--color-surface);
+  --card-text: var(--color-on-surface);
+  --card-border: var(--color-outline-variant);
+  --card-radius: var(--radius-xl);
+  --card-padding: var(--space-lg);
+  --card-shadow: var(--shadow-md);
+  --card-hover-shadow: var(--shadow-lg);
+  --card-hover-translate-y: -4px;
+
+  /* ──────────────────────────────────────────────────────────
+     GLASS EFFECT TOKENS — For glassmorphism components
+     ────────────────────────────────────────────────────────── */
+  --glass-bg: oklch(0.98 0.005 var(--hue-primary) / 0.6);
+  --glass-blur: 16px;
+  --glass-border: oklch(0.95 0.01 var(--hue-primary) / 0.3);
+  --glass-shadow: 0 8px 32px oklch(0.20 0.02 var(--hue-primary) / 0.1);
+
+  /* ──────────────────────────────────────────────────────────
+     NAVIGATION TOKENS
+     ────────────────────────────────────────────────────────── */
+  --nav-bg: var(--glass-bg);
+  --nav-blur: var(--glass-blur);
+  --nav-border: var(--glass-border);
+  --nav-text: var(--color-on-surface);
+  --nav-height: 72px;
+  --nav-padding-x: var(--space-lg);
+  --nav-link-hover: var(--color-primary);
+  --nav-link-active: var(--color-primary);
+
+  /* ──────────────────────────────────────────────────────────
+     HERO TOKENS
+     ────────────────────────────────────────────────────────── */
+  --hero-gradient-start: var(--primary-95);
+  --hero-gradient-mid: var(--secondary-95);
+  --hero-gradient-end: var(--accent-90);
+  --hero-text: var(--color-on-background);
+  --hero-padding-y: var(--space-5xl);
+  --hero-min-height: 90vh;
+
+  /* ──────────────────────────────────────────────────────────
+     INPUT / FORM TOKENS
+     ────────────────────────────────────────────────────────── */
+  --input-bg: var(--color-surface);
+  --input-text: var(--color-on-surface);
+  --input-border: var(--color-outline-variant);
+  --input-border-focus: var(--color-primary);
+  --input-radius: var(--radius-md);
+  --input-padding-x: var(--space-md);
+  --input-padding-y: var(--space-sm);
+  --input-focus-ring: 0 0 0 3px oklch(from var(--color-primary) l c h / 0.2);
+  --input-font-size: var(--font-size-base);
+
+  /* ──────────────────────────────────────────────────────────
+     FOOTER TOKENS
+     ────────────────────────────────────────────────────────── */
+  --footer-bg: var(--neutral-5);
+  --footer-text: var(--neutral-70);
+  --footer-heading: var(--neutral-90);
+  --footer-link-hover: var(--color-primary);
+  --footer-padding-y: var(--space-3xl);
+
+  /* ──────────────────────────────────────────────────────────
+     BADGE / PILL TOKENS
+     ────────────────────────────────────────────────────────── */
+  --badge-bg: var(--color-primary-container);
+  --badge-text: var(--color-on-primary-container);
+  --badge-radius: var(--radius-full);
+  --badge-padding-x: var(--space-sm);
+  --badge-padding-y: var(--space-2xs);
+  --badge-font-size: var(--font-size-xs);
+
+  /* ──────────────────────────────────────────────────────────
+     SECTION TOKENS — Shared patterns for page sections
+     ────────────────────────────────────────────────────────── */
+  --section-bg-alt: var(--color-surface-container);
+  --section-heading-color: var(--color-on-background);
+  --section-subheading-color: var(--neutral-50);
+  --section-divider: var(--color-outline-variant);
+}
+
+/* Dark theme component token overrides */
+[data-theme="dark"] {
+  --glass-bg: oklch(0.15 0.01 var(--hue-primary) / 0.7);
+  --glass-border: oklch(0.25 0.02 var(--hue-primary) / 0.3);
+  --glass-shadow: 0 8px 32px oklch(0.05 0.01 var(--hue-primary) / 0.3);
+
+  --button-hover-bg: var(--primary-70);
+  --button-active-bg: var(--primary-90);
+  --button-outline-hover-bg: var(--primary-30);
+
+  --hero-gradient-start: var(--primary-10);
+  --hero-gradient-mid: var(--secondary-10);
+  --hero-gradient-end: var(--neutral-5);
+
+  --input-focus-ring: 0 0 0 3px oklch(from var(--color-primary) l c h / 0.3);
+
+  --card-hover-translate-y: -6px;
+}
+
+[data-theme="high-contrast"] {
+  --glass-bg: var(--color-surface);
+  --glass-blur: 0px;
+  --glass-border: var(--color-outline);
+
+  --card-border: var(--neutral-20);
+  --card-shadow: none;
+}

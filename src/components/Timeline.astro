@@ -1,0 +1,130 @@
+---
+interface TimelineItem {
+  year: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  items: TimelineItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="timeline section" id="timeline">
+  <div class="container-narrow">
+    <div class="timeline__header reveal">
+      <span class="text-caption">Our journey</span>
+      <h2 class="text-heading-2">Milestones</h2>
+    </div>
+    <div class="timeline__track">
+      {items.map((item, index) => (
+        <div class="timeline__item reveal" style={`--delay: ${index * 0.1}s`}>
+          <div class="timeline__dot"></div>
+          <div class="timeline__content">
+            <span class="timeline__year">{item.year}</span>
+            <h3 class="timeline__title">{item.title}</h3>
+            <p class="timeline__desc">{item.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .timeline__header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .timeline__track {
+    position: relative;
+    padding-left: var(--space-2xl);
+  }
+
+  .timeline__track::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      var(--color-primary),
+      var(--color-secondary),
+      var(--color-accent)
+    );
+    border-radius: var(--radius-full);
+  }
+
+  .timeline__item {
+    position: relative;
+    padding-bottom: var(--space-2xl);
+    transition-delay: var(--delay);
+  }
+
+  .timeline__dot {
+    position: absolute;
+    left: calc(-1 * var(--space-2xl) + 4px);
+    top: var(--space-2xs);
+    width: 16px;
+    height: 16px;
+    border-radius: var(--radius-full);
+    background: var(--color-primary);
+    border: 3px solid var(--color-background);
+    box-shadow: var(--shadow-sm);
+    z-index: 1;
+    transition: transform var(--hover-duration) var(--hover-ease);
+  }
+
+  .timeline__item:hover .timeline__dot {
+    transform: scale(1.4);
+  }
+
+  .timeline__content {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--card-radius);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    transition: 
+      transform var(--hover-duration) var(--hover-ease),
+      box-shadow var(--hover-duration) var(--hover-ease);
+  }
+
+  .timeline__item:hover .timeline__content {
+    transform: translateX(var(--space-xs));
+    box-shadow: var(--card-hover-shadow);
+  }
+
+  .timeline__year {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+  }
+
+  .timeline__title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--section-heading-color);
+  }
+
+  .timeline__desc {
+    font-size: var(--font-size-sm);
+    color: var(--section-subheading-color);
+    line-height: var(--line-height-relaxed);
+  }
+</style>

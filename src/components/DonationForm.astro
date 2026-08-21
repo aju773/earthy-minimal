@@ -1,0 +1,280 @@
+---
+const amounts = [10, 25, 50, 100, 250];
+---
+
+<section class="donate section" id="donation-form">
+  <div class="container">
+    <div class="donate__layout">
+      <div class="donate__info reveal">
+        <span class="text-caption">Make a difference</span>
+        <h2 class="text-heading-2">Your Donation<br/>Changes Lives</h2>
+        <p class="text-body-lg">
+          Every contribution directly funds conservation projects, 
+          wildlife rescue operations, and environmental education programs.
+        </p>
+        <div class="donate__impact-list">
+          <div class="donate__impact-item">
+            <span class="donate__impact-icon">🌱</span>
+            <div>
+              <strong>$10</strong>
+              <span>Plants 5 native trees</span>
+            </div>
+          </div>
+          <div class="donate__impact-item">
+            <span class="donate__impact-icon">🦁</span>
+            <div>
+              <strong>$50</strong>
+              <span>Feeds a rescued animal for a month</span>
+            </div>
+          </div>
+          <div class="donate__impact-item">
+            <span class="donate__impact-icon">🏫</span>
+            <div>
+              <strong>$100</strong>
+              <span>Sponsors a student's eco-education</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form class="donate__form reveal" id="donate-form" aria-label="Donation form">
+        <div class="donate__form-glass">
+          <h3 class="donate__form-title">Choose Amount</h3>
+          
+          <div class="donate__amounts">
+            {amounts.map((amount) => (
+              <label class="donate__amount-option">
+                <input type="radio" name="amount" value={amount} />
+                <span class="donate__amount-label">${amount}</span>
+              </label>
+            ))}
+            <label class="donate__amount-option donate__amount-option--custom">
+              <input type="radio" name="amount" value="custom" />
+              <span class="donate__amount-label">Custom</span>
+            </label>
+          </div>
+
+          <div class="donate__fields">
+            <div class="donate__field">
+              <label for="donor-name" class="donate__label">Full Name</label>
+              <input type="text" id="donor-name" class="donate__input" placeholder="Jane Doe" />
+            </div>
+            <div class="donate__field">
+              <label for="donor-email" class="donate__label">Email</label>
+              <input type="email" id="donor-email" class="donate__input" placeholder="jane@example.com" />
+            </div>
+          </div>
+
+          <button type="submit" class="donate__submit">
+            Donate Now
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 3.5C10 3.5 3.5 7.5 3.5 11.5C3.5 14.5 6 16.5 10 16.5C14 16.5 16.5 14.5 16.5 11.5C16.5 7.5 10 3.5 10 3.5Z" fill="currentColor" opacity="0.8"/>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .donate__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .donate__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .donate__impact-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .donate__impact-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-container);
+    transition: transform var(--hover-duration) var(--hover-ease);
+  }
+
+  .donate__impact-item:hover {
+    transform: translateX(var(--space-xs));
+  }
+
+  .donate__impact-icon {
+    font-size: var(--font-size-xl);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .donate__impact-item strong {
+    display: block;
+    font-family: var(--font-family-display);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+  }
+
+  .donate__impact-item span {
+    font-size: var(--font-size-sm);
+    color: var(--section-subheading-color);
+  }
+
+  /* Form glass card */
+  .donate__form-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--card-radius);
+    padding: var(--space-2xl);
+    box-shadow: var(--glass-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .donate__form-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--section-heading-color);
+  }
+
+  .donate__amounts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xs);
+  }
+
+  .donate__amount-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .donate__amount-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-sm) var(--space-md);
+    border: 2px solid var(--input-border);
+    border-radius: var(--input-radius);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    color: var(--color-on-surface);
+    cursor: pointer;
+    transition: 
+      border-color var(--hover-duration) var(--hover-ease),
+      background var(--hover-duration) var(--hover-ease),
+      color var(--hover-duration) var(--hover-ease);
+  }
+
+  .donate__amount-label:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-container);
+  }
+
+  .donate__amount-option input:checked + .donate__amount-label {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+
+  .donate__fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .donate__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .donate__label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--section-heading-color);
+  }
+
+  .donate__input {
+    padding: var(--input-padding-y) var(--input-padding-x);
+    background: var(--input-bg);
+    border: 2px solid var(--input-border);
+    border-radius: var(--input-radius);
+    font-size: var(--input-font-size);
+    font-family: inherit;
+    color: var(--input-text);
+    transition: 
+      border-color var(--hover-duration) var(--hover-ease),
+      box-shadow var(--hover-duration) var(--hover-ease);
+    outline: none;
+  }
+
+  .donate__input:focus {
+    border-color: var(--input-border-focus);
+    box-shadow: var(--input-focus-ring);
+  }
+
+  .donate__input::placeholder {
+    color: var(--color-outline);
+  }
+
+  .donate__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    width: 100%;
+    padding: var(--space-md) var(--space-xl);
+    background: var(--button-bg);
+    color: var(--button-text);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-family-display);
+    border-radius: var(--button-radius);
+    border: none;
+    cursor: pointer;
+    box-shadow: var(--button-shadow);
+    transition: 
+      background var(--button-transition),
+      transform var(--button-transition),
+      box-shadow var(--button-transition);
+  }
+
+  .donate__submit:hover {
+    background: var(--button-hover-bg);
+    transform: scale(var(--hover-scale));
+    box-shadow: var(--shadow-lg);
+  }
+
+  .donate__submit:active {
+    transform: scale(var(--active-scale));
+    background: var(--button-active-bg);
+  }
+
+  @media (max-width: 768px) {
+    .donate__layout {
+      grid-template-columns: 1fr;
+    }
+    .donate__amounts {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

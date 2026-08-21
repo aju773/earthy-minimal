@@ -1,0 +1,248 @@
+---
+interface Props {
+  title: string;
+  subtitle: string;
+  ctaText?: string;
+  ctaHref?: string;
+  secondaryCtaText?: string;
+  secondaryCtaHref?: string;
+}
+
+const { 
+  title, 
+  subtitle, 
+  ctaText = 'Get Involved', 
+  ctaHref = '/donate',
+  secondaryCtaText = 'Our Mission',
+  secondaryCtaHref = '/about'
+} = Astro.props;
+---
+
+<section class="hero" id="hero">
+  <div class="hero__bg">
+    <div class="hero__gradient"></div>
+    <div class="hero__particles" aria-hidden="true">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div class="hero__particle" style={`--i: ${i}`}></div>
+      ))}
+    </div>
+  </div>
+  
+  <div class="hero__content container">
+    <span class="hero__badge">🌍 Conservation since 2012</span>
+    <h1 class="text-hero">{title}</h1>
+    <p class="hero__subtitle">{subtitle}</p>
+    <div class="hero__actions">
+      <a href={ctaHref} class="hero__cta hero__cta--primary">{ctaText}</a>
+      <a href={secondaryCtaHref} class="hero__cta hero__cta--outline">{secondaryCtaText}</a>
+    </div>
+  </div>
+
+  <div class="hero__scroll-hint" aria-hidden="true">
+    <div class="hero__scroll-line"></div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: var(--hero-min-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding-top: var(--nav-height);
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      var(--hero-gradient-start) 0%,
+      var(--hero-gradient-mid) 50%,
+      var(--hero-gradient-end) 100%
+    );
+    animation: gradient-shift 12s var(--ease-standard) infinite alternate;
+  }
+
+  @keyframes gradient-shift {
+    0%   { background-position: 0% 50%; background-size: 200% 200%; }
+    100% { background-position: 100% 50%; background-size: 200% 200%; }
+  }
+
+  /* Floating particle orbs — OKLCH-derived colors */
+  .hero__particles {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__particle {
+    position: absolute;
+    border-radius: var(--radius-full);
+    opacity: 0.3;
+    animation: particle-float 8s var(--ease-standard) infinite alternate;
+    animation-delay: calc(var(--i) * -1.3s);
+  }
+
+  .hero__particle:nth-child(1) {
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, var(--primary-80), transparent);
+    top: 20%; left: 10%;
+  }
+  .hero__particle:nth-child(2) {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, var(--secondary-80), transparent);
+    top: 60%; right: 5%;
+  }
+  .hero__particle:nth-child(3) {
+    width: 150px; height: 150px;
+    background: radial-gradient(circle, var(--accent-70), transparent);
+    bottom: 20%; left: 30%;
+  }
+  .hero__particle:nth-child(4) {
+    width: 100px; height: 100px;
+    background: radial-gradient(circle, var(--primary-70), transparent);
+    top: 10%; right: 30%;
+  }
+  .hero__particle:nth-child(5) {
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, var(--secondary-70), transparent);
+    bottom: 10%; right: 20%;
+  }
+  .hero__particle:nth-child(6) {
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, var(--accent-80), transparent);
+    top: 40%; left: 50%;
+  }
+
+  @keyframes particle-float {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, -40px) scale(1.1); }
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: var(--max-width-narrow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .hero__badge {
+    display: inline-block;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: var(--badge-padding-y) var(--badge-padding-x);
+    border-radius: var(--badge-radius);
+    font-size: var(--badge-font-size);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--letter-spacing-wide);
+    text-transform: uppercase;
+  }
+
+  .hero__subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--section-subheading-color);
+    line-height: var(--line-height-relaxed);
+    max-width: 600px;
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: var(--space-md);
+  }
+
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-md) var(--space-xl);
+    font-size: var(--button-font-size);
+    font-weight: var(--button-font-weight);
+    border-radius: var(--button-radius);
+    text-decoration: none;
+    transition: 
+      background var(--button-transition),
+      transform var(--button-transition),
+      box-shadow var(--button-transition),
+      color var(--button-transition);
+  }
+
+  .hero__cta--primary {
+    background: var(--button-bg);
+    color: var(--button-text);
+    box-shadow: var(--button-shadow);
+  }
+
+  .hero__cta--primary:hover {
+    background: var(--button-hover-bg);
+    color: var(--button-text);
+    transform: scale(var(--hover-scale));
+    box-shadow: var(--shadow-lg);
+  }
+
+  .hero__cta--primary:active {
+    transform: scale(var(--active-scale));
+    background: var(--button-active-bg);
+  }
+
+  .hero__cta--outline {
+    background: var(--button-outline-bg);
+    color: var(--button-outline-text);
+    border: 2px solid var(--button-outline-border);
+  }
+
+  .hero__cta--outline:hover {
+    background: var(--button-outline-hover-bg);
+    color: var(--button-outline-text);
+    transform: scale(var(--hover-scale));
+  }
+
+  .hero__cta--outline:active {
+    transform: scale(var(--active-scale));
+  }
+
+  /* Scroll hint indicator */
+  .hero__scroll-hint {
+    position: absolute;
+    bottom: var(--space-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .hero__scroll-line {
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--color-primary), transparent);
+    animation: scroll-line 2s var(--ease-standard) infinite;
+  }
+
+  @keyframes scroll-line {
+    0%   { transform: scaleY(0); transform-origin: top; }
+    50%  { transform: scaleY(1); transform-origin: top; }
+    51%  { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  @media (max-width: 768px) {
+    .hero { min-height: 80vh; }
+    .hero__cta { width: 100%; justify-content: center; }
+  }
+</style>

@@ -1,0 +1,83 @@
+/* ============================================================
+   ANIMATION TOKENS — Motion is also a token!
+   ============================================================
+   
+   🎯 MENTAL MODEL:
+   Just like colors, animation timing should NOT be hardcoded.
+   
+   Why?
+   1. Consistency — every animation feels like it belongs
+   2. Accessibility — prefers-reduced-motion sets --motion-scale to 0
+   3. Brand feel — a "playful" brand uses bouncy easings, 
+      a "corporate" brand uses smooth ones. Change here, not in 50 files.
+   ============================================================ */
+
+:root {
+  /* ──────────────────────────────────────────────────────────
+     DURATION SCALE
+     ────────────────────────────────────────────────────────── */
+  --duration-instant: 50ms;
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 800ms;
+  --duration-slowest: 1200ms;
+
+  /* ──────────────────────────────────────────────────────────
+     EASING CURVES — Material Design 3 standard curves
+     
+     Standard: general purpose (enter + exit)
+     Decelerate: elements entering the screen (ease-out)
+     Accelerate: elements leaving the screen (ease-in)
+     Emphasized: dramatic, attention-grabbing transitions
+     ────────────────────────────────────────────────────────── */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0, 1);
+  --ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1.2);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ──────────────────────────────────────────────────────────
+     MOTION SCALE — Global multiplier for all animations
+     Set to 0 to disable all motion instantly
+     ────────────────────────────────────────────────────────── */
+  --motion-scale: 1;
+
+  /* ──────────────────────────────────────────────────────────
+     SCROLL REVEAL TOKENS — For entrance animations
+     ────────────────────────────────────────────────────────── */
+  --reveal-distance: 30px;
+  --reveal-duration: var(--duration-slow);
+  --reveal-ease: var(--ease-decelerate);
+  --reveal-stagger: 80ms; /* delay between siblings */
+
+  /* ──────────────────────────────────────────────────────────
+     HOVER/INTERACTION TOKENS
+     ────────────────────────────────────────────────────────── */
+  --hover-scale: 1.02;
+  --active-scale: 0.98;
+  --hover-duration: var(--duration-fast);
+  --hover-ease: var(--ease-standard);
+}
+
+/* ================================================================
+   REDUCED MOTION — Respect user preferences
+   
+   By setting --motion-scale to 0 and overriding durations,
+   ALL animations across the entire site stop. No component
+   needs its own prefers-reduced-motion query.
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-scale: 0;
+    --duration-instant: 0ms;
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+    --duration-slower: 0ms;
+    --duration-slowest: 0ms;
+    --reveal-distance: 0px;
+    --hover-scale: 1;
+    --active-scale: 1;
+  }
+}

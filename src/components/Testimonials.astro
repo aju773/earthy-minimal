@@ -1,0 +1,131 @@
+---
+interface Testimonial {
+  quote: string;
+  name: string;
+  role: string;
+  initials: string;
+}
+
+interface Props {
+  testimonials: Testimonial[];
+}
+
+const { testimonials } = Astro.props;
+---
+
+<section class="testimonials section-alt" id="testimonials">
+  <div class="container">
+    <div class="testimonials__header reveal">
+      <span class="text-caption">What people say</span>
+      <h2 class="text-heading-2">Stories of Impact</h2>
+    </div>
+    <div class="testimonials__grid reveal-stagger">
+      {testimonials.map((t) => (
+        <blockquote class="testimonials__card reveal">
+          <div class="testimonials__quote-mark" aria-hidden="true">"</div>
+          <p class="testimonials__text">{t.quote}</p>
+          <footer class="testimonials__footer">
+            <div class="testimonials__avatar">
+              <span>{t.initials}</span>
+            </div>
+            <div>
+              <cite class="testimonials__name">{t.name}</cite>
+              <span class="testimonials__role">{t.role}</span>
+            </div>
+          </footer>
+        </blockquote>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials__header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .testimonials__card {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    padding: var(--space-xl);
+    box-shadow: var(--card-shadow);
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    position: relative;
+    transition: 
+      transform var(--hover-duration) var(--hover-ease),
+      box-shadow var(--hover-duration) var(--hover-ease),
+      border-color var(--hover-duration) var(--hover-ease);
+  }
+
+  .testimonials__card:hover {
+    transform: translateY(var(--card-hover-translate-y));
+    box-shadow: var(--card-hover-shadow);
+    border-color: var(--color-primary-container);
+  }
+
+  .testimonials__quote-mark {
+    font-family: var(--font-family-display);
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-primary);
+    opacity: 0.3;
+    position: absolute;
+    top: var(--space-md);
+    left: var(--space-lg);
+  }
+
+  .testimonials__text {
+    font-size: var(--font-size-base);
+    color: var(--color-on-surface);
+    line-height: var(--line-height-relaxed);
+    font-style: italic;
+    padding-top: var(--space-lg);
+  }
+
+  .testimonials__footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: auto;
+  }
+
+  .testimonials__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-sm);
+    color: var(--color-on-primary);
+    flex-shrink: 0;
+  }
+
+  .testimonials__name {
+    display: block;
+    font-style: normal;
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    color: var(--section-heading-color);
+  }
+
+  .testimonials__role {
+    font-size: var(--font-size-xs);
+    color: var(--section-subheading-color);
+  }
+</style>

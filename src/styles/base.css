@@ -1,0 +1,187 @@
+/* ============================================================
+   BASE STYLES — Resets + Typography + Utilities
+   ============================================================
+   
+   🎯 RULE: Even the reset uses tokens!
+   No magic numbers. Every value traces back to a token.
+   ============================================================ */
+
+/* ──────────────────────────────────────────────────────────
+   MODERN RESET
+   ────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-on-background);
+  background-color: var(--color-background);
+  transition: background-color var(--duration-normal) var(--ease-standard),
+              color var(--duration-normal) var(--ease-standard);
+}
+
+img, video, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--hover-duration) var(--hover-ease);
+}
+
+a:hover {
+  color: var(--button-hover-bg);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ──────────────────────────────────────────────────────────
+   TYPOGRAPHY CLASSES — All token-driven
+   ────────────────────────────────────────────────────────── */
+.text-hero {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-hero);
+  font-weight: var(--font-weight-extrabold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--section-heading-color);
+}
+
+.text-heading-1 {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--section-heading-color);
+}
+
+.text-heading-2 {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  color: var(--section-heading-color);
+}
+
+.text-heading-3 {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+  color: var(--section-heading-color);
+}
+
+.text-body {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-on-surface);
+}
+
+.text-body-lg {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  color: var(--section-subheading-color);
+}
+
+.text-caption {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--section-subheading-color);
+}
+
+/* ──────────────────────────────────────────────────────────
+   LAYOUT UTILITIES
+   ────────────────────────────────────────────────────────── */
+.container {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--section-padding-x);
+}
+
+.container-narrow {
+  max-width: var(--max-width-narrow);
+  margin-inline: auto;
+  padding-inline: var(--section-padding-x);
+}
+
+.section {
+  padding-block: var(--section-padding-y);
+}
+
+.section-alt {
+  padding-block: var(--section-padding-y);
+  background-color: var(--section-bg-alt);
+}
+
+/* ──────────────────────────────────────────────────────────
+   SCROLL REVEAL — Elements start hidden and animate in
+   ────────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  transition: 
+    opacity var(--reveal-duration) var(--reveal-ease),
+    transform var(--reveal-duration) var(--reveal-ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.reveal-stagger > .reveal:nth-child(1) { transition-delay: calc(var(--reveal-stagger) * 0); }
+.reveal-stagger > .reveal:nth-child(2) { transition-delay: calc(var(--reveal-stagger) * 1); }
+.reveal-stagger > .reveal:nth-child(3) { transition-delay: calc(var(--reveal-stagger) * 2); }
+.reveal-stagger > .reveal:nth-child(4) { transition-delay: calc(var(--reveal-stagger) * 3); }
+.reveal-stagger > .reveal:nth-child(5) { transition-delay: calc(var(--reveal-stagger) * 4); }
+.reveal-stagger > .reveal:nth-child(6) { transition-delay: calc(var(--reveal-stagger) * 5); }
+
+/* ──────────────────────────────────────────────────────────
+   SKELETON LOADING — Token-driven shimmer effect
+   ────────────────────────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-container) 0%,
+    var(--color-surface-container-high) 50%,
+    var(--color-surface-container) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer var(--duration-slowest) var(--ease-standard) infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

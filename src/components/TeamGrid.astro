@@ -1,0 +1,95 @@
+---
+interface TeamMember {
+  name: string;
+  role: string;
+  initials: string;
+}
+
+interface Props {
+  members: TeamMember[];
+}
+
+const { members } = Astro.props;
+---
+
+<section class="team section-alt" id="team">
+  <div class="container">
+    <div class="team__header reveal">
+      <span class="text-caption">Our people</span>
+      <h2 class="text-heading-2">Meet the Team</h2>
+      <p class="text-body-lg">Passionate individuals dedicated to protecting our planet.</p>
+    </div>
+    <div class="team__grid reveal-stagger">
+      {members.map((member) => (
+        <div class="team__card reveal">
+          <div class="team__avatar">
+            <span>{member.initials}</span>
+          </div>
+          <h3 class="team__name">{member.name}</h3>
+          <p class="team__role">{member.role}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .team__header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .team__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-xl);
+  }
+
+  .team__card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+    border-radius: var(--card-radius);
+    transition: 
+      transform var(--hover-duration) var(--hover-ease),
+      background var(--hover-duration) var(--hover-ease);
+  }
+
+  .team__card:hover {
+    transform: translateY(var(--card-hover-translate-y));
+    background: var(--glass-bg);
+  }
+
+  .team__avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .team__name {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--section-heading-color);
+  }
+
+  .team__role {
+    font-size: var(--font-size-sm);
+    color: var(--section-subheading-color);
+  }
+</style>

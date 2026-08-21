@@ -1,0 +1,158 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import ThemeSwitcher from '../components/ThemeSwitcher.astro';
+import TeamGrid from '../components/TeamGrid.astro';
+import Timeline from '../components/Timeline.astro';
+import Footer from '../components/Footer.astro';
+
+const team = [
+  { name: 'Dr. Sarah Chen', role: 'Executive Director', initials: 'SC' },
+  { name: 'Marcus Okonjo', role: 'Head of Conservation', initials: 'MO' },
+  { name: 'Lena Johansson', role: 'Marine Biologist', initials: 'LJ' },
+  { name: 'Raj Patel', role: 'Community Programs', initials: 'RP' },
+  { name: 'Amara Diallo', role: 'Wildlife Veterinarian', initials: 'AD' },
+  { name: 'Tom Nakamura', role: 'Policy & Advocacy', initials: 'TN' },
+];
+
+const milestones = [
+  { year: '2012', title: 'Founded', description: 'EarthGuard started as a small group of conservationists in San Francisco.' },
+  { year: '2015', title: 'First Sanctuary', description: 'Opened our first wildlife sanctuary in Kenya, rescuing 200+ animals.' },
+  { year: '2018', title: 'Ocean Initiative', description: 'Launched our ocean cleanup program across 3 coastlines.' },
+  { year: '2020', title: 'Global Expansion', description: 'Expanded operations to 20 countries with 500+ team members.' },
+  { year: '2023', title: '150K Trees', description: 'Reached our milestone of 150,000 native trees planted worldwide.' },
+  { year: '2024', title: 'AI Conservation', description: 'Deployed AI-powered wildlife monitoring across all sanctuaries.' },
+];
+---
+
+<Base title="About" description="Learn about EarthGuard's mission, team, and journey protecting the planet.">
+  <Nav>
+    <ThemeSwitcher slot="theme-switcher" />
+  </Nav>
+
+  <!-- About Hero -->
+  <section class="about-hero section" id="about-hero">
+    <div class="container">
+      <div class="about-hero__content reveal">
+        <span class="text-caption">About us</span>
+        <h1 class="text-heading-1">Our Mission Is Simple: Protect Earth</h1>
+        <p class="text-body-lg">
+          We are a global conservation organization dedicated to protecting endangered species, 
+          restoring critical ecosystems, and building a sustainable future for all life on Earth.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Values -->
+  <section class="values section-alt" id="values">
+    <div class="container">
+      <div class="values__header reveal">
+        <span class="text-caption">Our values</span>
+        <h2 class="text-heading-2">What Drives Us</h2>
+      </div>
+      <div class="values__grid reveal-stagger">
+        <div class="values__card reveal">
+          <div class="values__icon">🔬</div>
+          <h3 class="values__title">Science-Led</h3>
+          <p class="values__desc">Every project is grounded in peer-reviewed research and ecological data.</p>
+        </div>
+        <div class="values__card reveal">
+          <div class="values__icon">🤝</div>
+          <h3 class="values__title">Community-First</h3>
+          <p class="values__desc">We empower local communities as the primary guardians of their ecosystems.</p>
+        </div>
+        <div class="values__card reveal">
+          <div class="values__icon">📊</div>
+          <h3 class="values__title">Transparent</h3>
+          <p class="values__desc">89% of all funds go directly to conservation programs, openly reported.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TeamGrid members={team} />
+  <Timeline items={milestones} />
+
+  <Footer />
+</Base>
+
+<style>
+  .about-hero {
+    padding-top: calc(var(--nav-height) + var(--space-4xl));
+    background: linear-gradient(
+      180deg,
+      var(--hero-gradient-start) 0%,
+      var(--color-background) 100%
+    );
+  }
+
+  .about-hero__content {
+    max-width: var(--max-width-narrow);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  /* Values Section */
+  .values__header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .values__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .values__card {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    padding: var(--space-xl);
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    text-align: center;
+    border: 1px solid transparent;
+    transition: 
+      transform var(--hover-duration) var(--hover-ease),
+      box-shadow var(--hover-duration) var(--hover-ease),
+      border-color var(--hover-duration) var(--hover-ease);
+  }
+
+  .values__card:hover {
+    transform: translateY(var(--card-hover-translate-y));
+    box-shadow: var(--card-hover-shadow);
+    border-color: var(--color-primary-container);
+  }
+
+  .values__icon {
+    font-size: var(--font-size-2xl);
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-inline: auto;
+    background: var(--color-primary-container);
+    border-radius: var(--radius-lg);
+  }
+
+  .values__title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--section-heading-color);
+  }
+
+  .values__desc {
+    font-size: var(--font-size-sm);
+    color: var(--section-subheading-color);
+    line-height: var(--line-height-relaxed);
+  }
+</style>

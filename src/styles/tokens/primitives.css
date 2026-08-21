@@ -1,0 +1,213 @@
+/* ============================================================
+   TIER 1: PRIMITIVES — The Single Source of Truth
+   ============================================================
+   
+   🎯 MENTAL MODEL:
+   This is the ONE file developers change to transform the entire site.
+   
+   OKLCH = Oklab Lightness, Chroma, Hue
+   - L (Lightness): 0% = black, 100% = white  
+   - C (Chroma):    0 = gray, 0.4 = max saturation
+   - H (Hue):       0-360 degrees on the color wheel
+   
+   WHY OKLCH over HSL?
+   - Perceptually uniform: oklch(0.7 0.15 145) and oklch(0.7 0.15 250)
+     look the SAME brightness. HSL can't do this.
+   - This means we can rotate the hue and nothing looks "off"
+   - Google Material Design 3 uses this exact approach
+
+   🔑 KEY INSIGHT: 
+   We store hue, chroma, and lightness as SEPARATE variables.
+   This lets us compose colors mathematically and override 
+   individual channels for themes.
+   ============================================================ */
+
+:root {
+  /* ──────────────────────────────────────────────────────────
+     HUE ANCHORS — The primary control knobs
+     Change these numbers to re-skin the entire site.
+     
+     🎨 Try these:
+     145 = Forest Green (conservation)
+     250 = Ocean Blue (marine)
+     45  = Amber Gold (wildlife)
+     320 = Berry Purple (nonprofit gala)
+     ────────────────────────────────────────────────────────── */
+  --hue-primary: 145;
+  --hue-secondary: 85;    /* complementary: leafy yellow-green */
+  --hue-accent: 45;       /* warm accent: amber/gold */
+  --hue-error: 25;        /* red-orange for errors */
+
+  /* ──────────────────────────────────────────────────────────
+     CHROMA LEVELS — How vivid or muted colors appear
+     ────────────────────────────────────────────────────────── */
+  --chroma-vivid: 0.18;   /* buttons, CTAs, primary actions */
+  --chroma-moderate: 0.12; /* secondary elements */
+  --chroma-muted: 0.06;   /* backgrounds, surfaces */
+  --chroma-subtle: 0.03;  /* barely-there tints */
+  --chroma-none: 0;        /* true neutrals */
+
+  /* ──────────────────────────────────────────────────────────
+     PRIMARY COLOR SCALE — Built from hue + chroma + lightness
+     Naming: --primary-{lightness}
+     
+     Each step is a specific lightness level (0-100).
+     Components NEVER use these directly — they use semantic tokens.
+     ────────────────────────────────────────────────────────── */
+  --primary-10: oklch(0.20 var(--chroma-vivid) var(--hue-primary));
+  --primary-20: oklch(0.30 var(--chroma-vivid) var(--hue-primary));
+  --primary-30: oklch(0.40 var(--chroma-vivid) var(--hue-primary));
+  --primary-40: oklch(0.50 var(--chroma-vivid) var(--hue-primary));
+  --primary-50: oklch(0.60 var(--chroma-vivid) var(--hue-primary));
+  --primary-60: oklch(0.70 var(--chroma-vivid) var(--hue-primary));
+  --primary-70: oklch(0.80 var(--chroma-vivid) var(--hue-primary));
+  --primary-80: oklch(0.85 var(--chroma-moderate) var(--hue-primary));
+  --primary-90: oklch(0.92 var(--chroma-muted) var(--hue-primary));
+  --primary-95: oklch(0.96 var(--chroma-subtle) var(--hue-primary));
+  --primary-99: oklch(0.99 var(--chroma-subtle) var(--hue-primary));
+
+  /* ──────────────────────────────────────────────────────────
+     SECONDARY COLOR SCALE
+     ────────────────────────────────────────────────────────── */
+  --secondary-10: oklch(0.20 var(--chroma-moderate) var(--hue-secondary));
+  --secondary-20: oklch(0.30 var(--chroma-moderate) var(--hue-secondary));
+  --secondary-30: oklch(0.40 var(--chroma-moderate) var(--hue-secondary));
+  --secondary-40: oklch(0.50 var(--chroma-moderate) var(--hue-secondary));
+  --secondary-50: oklch(0.60 var(--chroma-moderate) var(--hue-secondary));
+  --secondary-60: oklch(0.70 var(--chroma-moderate) var(--hue-secondary));
+  --secondary-70: oklch(0.80 var(--chroma-moderate) var(--hue-secondary));
+  --secondary-80: oklch(0.85 var(--chroma-muted) var(--hue-secondary));
+  --secondary-90: oklch(0.92 var(--chroma-subtle) var(--hue-secondary));
+  --secondary-95: oklch(0.96 var(--chroma-subtle) var(--hue-secondary));
+
+  /* ──────────────────────────────────────────────────────────
+     ACCENT COLOR SCALE — Warm amber/gold
+     ────────────────────────────────────────────────────────── */
+  --accent-30: oklch(0.40 var(--chroma-vivid) var(--hue-accent));
+  --accent-40: oklch(0.50 var(--chroma-vivid) var(--hue-accent));
+  --accent-50: oklch(0.65 var(--chroma-vivid) var(--hue-accent));
+  --accent-60: oklch(0.72 var(--chroma-vivid) var(--hue-accent));
+  --accent-70: oklch(0.80 var(--chroma-moderate) var(--hue-accent));
+  --accent-80: oklch(0.88 var(--chroma-muted) var(--hue-accent));
+  --accent-90: oklch(0.94 var(--chroma-subtle) var(--hue-accent));
+
+  /* ──────────────────────────────────────────────────────────
+     NEUTRAL SCALE — No chroma (pure grays with a hint of warmth)
+     Used for text, surfaces, dividers
+     ────────────────────────────────────────────────────────── */
+  --neutral-0:  oklch(0.00 0 0);
+  --neutral-5:  oklch(0.15 var(--chroma-subtle) var(--hue-primary));
+  --neutral-10: oklch(0.20 var(--chroma-subtle) var(--hue-primary));
+  --neutral-20: oklch(0.30 0.01 var(--hue-primary));
+  --neutral-30: oklch(0.40 0.01 var(--hue-primary));
+  --neutral-40: oklch(0.50 0.01 var(--hue-primary));
+  --neutral-50: oklch(0.60 0.01 var(--hue-primary));
+  --neutral-60: oklch(0.70 0.005 var(--hue-primary));
+  --neutral-70: oklch(0.78 0.005 var(--hue-primary));
+  --neutral-80: oklch(0.85 0.005 var(--hue-primary));
+  --neutral-90: oklch(0.92 0.005 var(--hue-primary));
+  --neutral-95: oklch(0.96 0.003 var(--hue-primary));
+  --neutral-98: oklch(0.98 0.002 var(--hue-primary));
+  --neutral-100: oklch(1.00 0 0);
+
+  /* ──────────────────────────────────────────────────────────
+     ERROR SCALE
+     ────────────────────────────────────────────────────────── */
+  --error-40: oklch(0.55 0.2 var(--hue-error));
+  --error-80: oklch(0.85 0.08 var(--hue-error));
+  --error-90: oklch(0.93 0.04 var(--hue-error));
+
+  /* ──────────────────────────────────────────────────────────
+     SPACING PRIMITIVES — Based on a 4px grid with ratio scale
+     ────────────────────────────────────────────────────────── */
+  --space-unit: 4px;
+  --space-ratio: 1.5;    /* golden-ish ratio for scaling */
+
+  /* ──────────────────────────────────────────────────────────
+     TYPOGRAPHY PRIMITIVES — Font families and base size
+     ────────────────────────────────────────────────────────── */
+  --font-family-display: 'Outfit', system-ui, sans-serif;
+  --font-family-body: 'Inter', system-ui, sans-serif;
+  --font-family-mono: 'JetBrains Mono', monospace;
+  --font-size-base: 16px;
+  --font-scale-ratio: 1.25; /* Major Third scale */
+
+  /* ──────────────────────────────────────────────────────────
+     BORDER RADIUS PRIMITIVES
+     ────────────────────────────────────────────────────────── */
+  --radius-unit: 4px;
+}
+
+/* ================================================================
+   DARK THEME — Only lightness and chroma change. Hue stays the same!
+   
+   🎯 KEY INSIGHT: We don't redefine colors. We swap which 
+   lightness step maps to which role. Dark mode is just
+   "flip the lightness scale" + "reduce chroma slightly."
+   ================================================================ */
+[data-theme="dark"] {
+  /* Slightly reduce vivid chroma in dark mode for comfort */
+  --chroma-vivid: 0.16;
+  --chroma-moderate: 0.10;
+
+  /* Neutrals get a darker base tint */
+  --neutral-5:  oklch(0.13 0.02 var(--hue-primary));
+  --neutral-10: oklch(0.17 0.015 var(--hue-primary));
+  --neutral-20: oklch(0.25 0.01 var(--hue-primary));
+  --neutral-95: oklch(0.92 0.005 var(--hue-primary));
+  --neutral-98: oklch(0.95 0.003 var(--hue-primary));
+}
+
+/* ================================================================
+   HIGH CONTRAST — Increase chroma and widen lightness gaps
+   for accessibility (WCAG AAA)
+   ================================================================ */
+[data-theme="high-contrast"] {
+  --chroma-vivid: 0.24;
+  --chroma-moderate: 0.18;
+  
+  /* Push lights lighter and darks darker */
+  --primary-40: oklch(0.45 0.24 var(--hue-primary));
+  --primary-60: oklch(0.75 0.20 var(--hue-primary));
+  --primary-80: oklch(0.90 0.14 var(--hue-primary));
+  
+  --neutral-0:  oklch(0.00 0 0);
+  --neutral-100: oklch(1.00 0 0);
+}
+
+/* ================================================================
+   HUE ROTATION DEMO — Animated brand color shift
+   
+   This is the "wow" moment: one CSS animation on --hue-primary
+   morphs the ENTIRE site through the color wheel.
+   ================================================================ */
+[data-hue-shift="true"] {
+  animation: hue-rotate 8s linear infinite;
+}
+
+@keyframes hue-rotate {
+  0%   { --hue-primary: 145; } /* Forest Green */
+  25%  { --hue-primary: 200; } /* Ocean Blue */
+  50%  { --hue-primary: 45;  } /* Amber Gold */
+  75%  { --hue-primary: 320; } /* Berry Purple */
+  100% { --hue-primary: 145; } /* Back to Green */
+}
+
+/* Register the property so it can be animated */
+@property --hue-primary {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 145;
+}
+
+@property --hue-secondary {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 85;
+}
+
+@property --hue-accent {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 45;
+}

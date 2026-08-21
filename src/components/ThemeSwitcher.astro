@@ -1,0 +1,113 @@
+---
+---
+
+<div class="theme-switcher" id="theme-switcher">
+  <button 
+    class="theme-switcher__btn" 
+    data-theme-value="" 
+    aria-label="Light theme"
+    title="Light"
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+  </button>
+  <button 
+    class="theme-switcher__btn" 
+    data-theme-value="dark" 
+    aria-label="Dark theme"
+    title="Dark"
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+  <button 
+    class="theme-switcher__btn" 
+    data-theme-value="high-contrast" 
+    aria-label="High contrast theme"
+    title="High Contrast"
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M12 2v20" fill="currentColor"/>
+      <path d="M12 2a10 10 0 0 1 0 20" fill="currentColor"/>
+    </svg>
+  </button>
+  
+  <!-- Hue rotation toggle -->
+  <button 
+    class="theme-switcher__btn theme-switcher__btn--hue" 
+    data-hue-toggle
+    aria-label="Toggle hue rotation demo"
+    title="🌈 Hue Shift Demo"
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <circle cx="12" cy="12" r="4"/>
+      <line x1="12" y1="2" x2="12" y2="6"/>
+      <line x1="12" y1="18" x2="12" y2="22"/>
+      <line x1="2" y1="12" x2="6" y2="12"/>
+      <line x1="18" y1="12" x2="22" y2="12"/>
+    </svg>
+  </button>
+</div>
+
+<style>
+  .theme-switcher {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    background: var(--color-surface-container);
+    padding: var(--space-2xs);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-outline-variant);
+  }
+
+  .theme-switcher__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    color: var(--color-on-surface);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: 
+      background var(--hover-duration) var(--hover-ease),
+      color var(--hover-duration) var(--hover-ease),
+      transform var(--hover-duration) var(--hover-ease);
+  }
+
+  .theme-switcher__btn:hover {
+    background: var(--color-surface-container-high);
+    transform: scale(1.1);
+  }
+
+  .theme-switcher__btn.is-active {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+
+  .theme-switcher__btn--hue {
+    border-left: 1px solid var(--color-outline-variant);
+    margin-left: var(--space-2xs);
+    padding-left: var(--space-2xs);
+  }
+
+  .theme-switcher__btn--hue.is-active {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    animation: hue-btn-pulse 2s var(--ease-standard) infinite;
+  }
+
+  @keyframes hue-btn-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+</style>

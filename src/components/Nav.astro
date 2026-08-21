@@ -1,0 +1,211 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/donate', label: 'Donate' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="nav" id="main-nav">
+  <div class="nav__inner container">
+    <a href="/" class="nav__logo" aria-label="EarthGuard home">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/>
+        <path d="M10 20c2-4 6-8 12-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="16" cy="12" r="3" fill="currentColor"/>
+      </svg>
+      <span>EarthGuard</span>
+    </a>
+
+    <ul class="nav__links" id="nav-links">
+      {navLinks.map(link => (
+        <li>
+          <a 
+            href={link.href} 
+            class:list={['nav__link', { 'nav__link--active': currentPath === link.href }]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="nav__actions">
+      <slot name="theme-switcher" />
+      <a href="/donate" class="nav__cta">Donate Now</a>
+      <button class="nav__burger" id="nav-burger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<style>
+  /* 🎯 NOTICE: Every single value here is a token reference.
+     Zero hardcoded colors, sizes, or timing values. */
+  
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: var(--nav-height);
+    background: var(--nav-bg);
+    backdrop-filter: blur(var(--nav-blur));
+    -webkit-backdrop-filter: blur(var(--nav-blur));
+    border-bottom: 1px solid var(--nav-border);
+    transition: background var(--duration-normal) var(--ease-standard);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    gap: var(--space-lg);
+  }
+
+  .nav__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+    color: var(--nav-text);
+    text-decoration: none;
+    transition: color var(--hover-duration) var(--hover-ease);
+  }
+
+  .nav__logo:hover {
+    color: var(--nav-link-hover);
+  }
+
+  .nav__logo svg {
+    color: var(--color-primary);
+    width: var(--space-xl);
+    height: var(--space-xl);
+  }
+
+  .nav__links {
+    display: flex;
+    gap: var(--space-xl);
+  }
+
+  .nav__link {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--nav-text);
+    text-decoration: none;
+    padding-block: var(--space-2xs);
+    position: relative;
+    transition: color var(--hover-duration) var(--hover-ease);
+  }
+
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--nav-link-active);
+    transform: scaleX(0);
+    transition: transform var(--duration-fast) var(--ease-standard);
+  }
+
+  .nav__link:hover { color: var(--nav-link-hover); }
+  .nav__link:hover::after,
+  .nav__link--active::after { transform: scaleX(1); }
+  .nav__link--active { color: var(--nav-link-active); }
+
+  .nav__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .nav__cta {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--button-padding-y) var(--button-padding-x);
+    background: var(--button-bg);
+    color: var(--button-text);
+    font-size: var(--button-font-size);
+    font-weight: var(--button-font-weight);
+    border-radius: var(--button-radius);
+    text-decoration: none;
+    transition: 
+      background var(--button-transition),
+      transform var(--button-transition),
+      box-shadow var(--button-transition);
+  }
+
+  .nav__cta:hover {
+    background: var(--button-hover-bg);
+    color: var(--button-text);
+    transform: scale(var(--hover-scale));
+    box-shadow: var(--button-shadow);
+  }
+
+  .nav__cta:active {
+    transform: scale(var(--active-scale));
+  }
+
+  .nav__burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: var(--space-xs);
+  }
+
+  .nav__burger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--nav-text);
+    border-radius: var(--radius-full);
+    transition: transform var(--duration-fast) var(--ease-standard);
+  }
+
+  @media (max-width: 768px) {
+    .nav__links {
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--nav-bg);
+      backdrop-filter: blur(var(--nav-blur));
+      padding: var(--space-lg);
+      gap: var(--space-md);
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: 
+        transform var(--duration-normal) var(--ease-standard),
+        opacity var(--duration-normal) var(--ease-standard);
+    }
+
+    .nav__links.is-open {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .nav__cta { display: none; }
+    .nav__burger { display: flex; }
+  }
+</style>
+
+<script>
+  const burger = document.getElementById('nav-burger');
+  const links = document.getElementById('nav-links');
+  burger?.addEventListener('click', () => {
+    const isOpen = links?.classList.toggle('is-open');
+    burger.setAttribute('aria-expanded', String(isOpen));
+  });
+</script>

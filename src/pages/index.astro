@@ -1,0 +1,167 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import ThemeSwitcher from '../components/ThemeSwitcher.astro';
+import Hero from '../components/Hero.astro';
+import StatsCounter from '../components/StatsCounter.astro';
+import Card from '../components/Card.astro';
+import Footer from '../components/Footer.astro';
+
+const stats = [
+  { value: 2400, suffix: '+', label: 'Species Protected' },
+  { value: 150, suffix: 'K', label: 'Trees Planted' },
+  { value: 89, suffix: '%', label: 'Funds to Programs' },
+  { value: 34, label: 'Countries Active' },
+];
+
+const programs = [
+  {
+    icon: '🌳',
+    title: 'Reforestation',
+    description: 'Restoring native forests across 12 countries with indigenous seedlings and community-led planting.',
+    href: '/about',
+  },
+  {
+    icon: '🐘',
+    title: 'Wildlife Rescue',
+    description: 'Operating 8 wildlife sanctuaries providing medical care, rehabilitation, and safe habitats.',
+    href: '/about',
+  },
+  {
+    icon: '🌊',
+    title: 'Ocean Cleanup',
+    description: 'Deploying autonomous ocean cleanup systems and leading coastal restoration projects.',
+    href: '/about',
+  },
+];
+---
+
+<Base title="Home" description="EarthGuard — Leading the fight to protect our planet's wildlife and ecosystems.">
+  <Nav>
+    <ThemeSwitcher slot="theme-switcher" />
+  </Nav>
+
+  <Hero 
+    title="Defend What Can't Defend Itself"
+    subtitle="We protect endangered species, restore critical habitats, and empower communities to become guardians of the natural world."
+  />
+
+  <StatsCounter stats={stats} />
+
+  <section class="programs section-alt" id="programs">
+    <div class="container">
+      <div class="programs__header reveal">
+        <span class="text-caption">What we do</span>
+        <h2 class="text-heading-2">Our Programs</h2>
+        <p class="text-body-lg">Focused initiatives driving measurable environmental impact.</p>
+      </div>
+      <div class="programs__grid reveal-stagger">
+        {programs.map((p) => (
+          <div class="reveal">
+            <Card 
+              title={p.title} 
+              description={p.description} 
+              icon={p.icon} 
+              href={p.href}
+              variant="glass"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta section" id="cta">
+    <div class="container">
+      <div class="cta__content reveal">
+        <h2 class="text-heading-2">Ready to Make a Difference?</h2>
+        <p class="text-body-lg">Join thousands of supporters who are helping us protect the planet.</p>
+        <div class="cta__actions">
+          <a href="/donate" class="cta__button cta__button--primary">Start Donating</a>
+          <a href="/about" class="cta__button cta__button--outline">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<style>
+  .programs__header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .programs__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  /* CTA Section */
+  .cta__content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    max-width: var(--max-width-narrow);
+    margin-inline: auto;
+    padding: var(--space-3xl);
+    background: linear-gradient(135deg, var(--color-primary-container), var(--color-secondary-container));
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--color-outline-variant);
+  }
+
+  .cta__actions {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cta__button {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-md) var(--space-xl);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--button-font-size);
+    border-radius: var(--button-radius);
+    text-decoration: none;
+    transition: 
+      background var(--button-transition),
+      transform var(--button-transition),
+      box-shadow var(--button-transition),
+      color var(--button-transition);
+  }
+
+  .cta__button--primary {
+    background: var(--button-bg);
+    color: var(--button-text);
+    box-shadow: var(--button-shadow);
+  }
+
+  .cta__button--primary:hover {
+    background: var(--button-hover-bg);
+    color: var(--button-text);
+    transform: scale(var(--hover-scale));
+    box-shadow: var(--shadow-lg);
+  }
+
+  .cta__button--outline {
+    background: transparent;
+    color: var(--button-outline-text);
+    border: 2px solid var(--button-outline-border);
+  }
+
+  .cta__button--outline:hover {
+    background: var(--button-outline-hover-bg);
+    color: var(--button-outline-text);
+    transform: scale(var(--hover-scale));
+  }
+</style>

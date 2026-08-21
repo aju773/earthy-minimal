@@ -1,0 +1,109 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  icon?: string;
+  href?: string;
+  variant?: 'default' | 'glass' | 'outlined';
+}
+
+const { title, description, icon = '🌿', href, variant = 'default' } = Astro.props;
+---
+
+<div class:list={['card', `card--${variant}`]}>
+  <div class="card__icon">{icon}</div>
+  <h3 class="card__title">{title}</h3>
+  <p class="card__description">{description}</p>
+  {href && (
+    <a href={href} class="card__link">
+      Learn more
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M6 12l4-4-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </a>
+  )}
+</div>
+
+<style>
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    padding: var(--card-padding);
+    box-shadow: var(--card-shadow);
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    transition: 
+      transform var(--hover-duration) var(--hover-ease),
+      box-shadow var(--hover-duration) var(--hover-ease),
+      border-color var(--hover-duration) var(--hover-ease);
+  }
+
+  .card:hover {
+    transform: translateY(var(--card-hover-translate-y));
+    box-shadow: var(--card-hover-shadow);
+    border-color: var(--card-border);
+  }
+
+  /* Glass variant */
+  .card--glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  /* Outlined variant */
+  .card--outlined {
+    background: transparent;
+    border: 2px solid var(--card-border);
+    box-shadow: none;
+  }
+
+  .card--outlined:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-container);
+  }
+
+  .card__icon {
+    font-size: var(--font-size-2xl);
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary-container);
+    border-radius: var(--radius-lg);
+  }
+
+  .card__title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--card-text);
+  }
+
+  .card__description {
+    font-size: var(--font-size-sm);
+    color: var(--section-subheading-color);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+    margin-top: auto;
+    transition: gap var(--hover-duration) var(--hover-ease);
+  }
+
+  .card__link:hover {
+    gap: var(--space-xs);
+    color: var(--button-hover-bg);
+  }
+</style>

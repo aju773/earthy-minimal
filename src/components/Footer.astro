@@ -1,0 +1,159 @@
+---
+---
+
+<footer class="footer" id="site-footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <div class="footer__logo">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/>
+            <path d="M10 20c2-4 6-8 12-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="16" cy="12" r="3" fill="currentColor"/>
+          </svg>
+          <span>EarthGuard</span>
+        </div>
+        <p class="footer__tagline">Protecting our planet, one action at a time.</p>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="footer__heading">Quick Links</h4>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/donate">Donate</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="footer__heading">Programs</h4>
+        <ul>
+          <li><a href="#">Reforestation</a></li>
+          <li><a href="#">Wildlife Rescue</a></li>
+          <li><a href="#">Ocean Cleanup</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="footer__heading">Contact</h4>
+        <ul>
+          <li>hello@earthguard.org</li>
+          <li>+1 (555) 123-4567</li>
+          <li>San Francisco, CA</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>© 2024 EarthGuard. All rights reserved.</p>
+      <p class="footer__credit">
+        Built with 
+        <span class="footer__heart" aria-label="love">♥</span> 
+        for the planet
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--footer-bg);
+    color: var(--footer-text);
+    padding-block: var(--footer-padding-y);
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--color-outline-variant);
+  }
+
+  .footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .footer__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+    color: var(--footer-heading);
+  }
+
+  .footer__logo svg {
+    color: var(--color-primary);
+  }
+
+  .footer__tagline {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+    max-width: 280px;
+  }
+
+  .footer__heading {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--footer-heading);
+    margin-bottom: var(--space-md);
+    letter-spacing: var(--letter-spacing-wide);
+    text-transform: uppercase;
+  }
+
+  .footer__col ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .footer__col li {
+    font-size: var(--font-size-sm);
+  }
+
+  .footer__col a {
+    color: var(--footer-text);
+    text-decoration: none;
+    transition: color var(--hover-duration) var(--hover-ease);
+  }
+
+  .footer__col a:hover {
+    color: var(--footer-link-hover);
+  }
+
+  .footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-xl);
+    font-size: var(--font-size-xs);
+  }
+
+  .footer__heart {
+    color: var(--color-primary);
+    display: inline-block;
+    animation: heartbeat 1.5s var(--ease-standard) infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
+  @media (max-width: 768px) {
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+    .footer__bottom {
+      flex-direction: column;
+      gap: var(--space-sm);
+      text-align: center;
+    }
+  }
+</style>

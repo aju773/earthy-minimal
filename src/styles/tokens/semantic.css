@@ -1,0 +1,196 @@
+/* ============================================================
+   TIER 2: SEMANTIC TOKENS — Maps primitives to meaning
+   ============================================================
+   
+   🎯 MENTAL MODEL:
+   Primitives are raw colors. Semantic tokens give them PURPOSE.
+   
+   A component never asks "what shade of green?" — it asks 
+   "what color is the primary action?" The answer changes per theme
+   but the component code stays identical.
+   
+   This file is the BRIDGE between raw values and components.
+   
+   NAMING CONVENTION (Material Design 3):
+   --color-{role}              → the color itself
+   --color-on-{role}           → text/icon ON that color
+   --color-{role}-container    → a lighter version for containers
+   --color-on-{role}-container → text ON the container
+   ============================================================ */
+
+:root {
+  /* ──────────────────────────────────────────────────────────
+     COLOR ROLES — What the color MEANS, not what it IS
+     ────────────────────────────────────────────────────────── */
+  
+  /* Primary — Main brand action (buttons, links, active states) */
+  --color-primary: var(--primary-40);
+  --color-on-primary: var(--neutral-100);
+  --color-primary-container: var(--primary-90);
+  --color-on-primary-container: var(--primary-10);
+
+  /* Secondary — Supporting elements */
+  --color-secondary: var(--secondary-40);
+  --color-on-secondary: var(--neutral-100);
+  --color-secondary-container: var(--secondary-90);
+  --color-on-secondary-container: var(--secondary-10);
+
+  /* Accent — Highlights, badges, special callouts */
+  --color-accent: var(--accent-50);
+  --color-on-accent: var(--neutral-0);
+  --color-accent-container: var(--accent-90);
+
+  /* Surface — Backgrounds and containers */
+  --color-surface: var(--neutral-100);
+  --color-on-surface: var(--neutral-10);
+  --color-surface-dim: var(--neutral-90);
+  --color-surface-container: var(--neutral-95);
+  --color-surface-container-high: var(--neutral-90);
+  --color-surface-container-highest: var(--neutral-85, oklch(0.88 0.005 var(--hue-primary)));
+
+  /* Background — Page-level background */
+  --color-background: var(--neutral-98);
+  --color-on-background: var(--neutral-10);
+
+  /* Outline & Dividers */
+  --color-outline: var(--neutral-50);
+  --color-outline-variant: var(--neutral-80);
+
+  /* Error */
+  --color-error: var(--error-40);
+  --color-error-container: var(--error-90);
+
+  /* ──────────────────────────────────────────────────────────
+     TYPOGRAPHY SCALE — Fluid sizing using clamp()
+     
+     The pattern: clamp(min, preferred, max)
+     - min: the smallest it'll get (mobile)
+     - preferred: scales with viewport (vw)
+     - max: the largest it'll get (desktop)
+     ────────────────────────────────────────────────────────── */
+  --font-size-xs:   clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
+  --font-size-sm:   clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);
+  --font-size-base: clamp(0.95rem, 0.9rem + 0.3vw, 1.1rem);
+  --font-size-md:   clamp(1.1rem, 1rem + 0.4vw, 1.3rem);
+  --font-size-lg:   clamp(1.4rem, 1.2rem + 0.8vw, 1.8rem);
+  --font-size-xl:   clamp(1.8rem, 1.5rem + 1.2vw, 2.5rem);
+  --font-size-2xl:  clamp(2.2rem, 1.8rem + 1.8vw, 3.2rem);
+  --font-size-3xl:  clamp(2.8rem, 2rem + 2.5vw, 4.2rem);
+  --font-size-hero: clamp(3.2rem, 2.5rem + 3vw, 5.5rem);
+
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Line heights */
+  --line-height-tight: 1.1;
+  --line-height-snug: 1.3;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.8;
+
+  /* Letter spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.04em;
+  --letter-spacing-wider: 0.08em;
+
+  /* ──────────────────────────────────────────────────────────
+     SPACING SCALE — Derived from the base unit
+     ────────────────────────────────────────────────────────── */
+  --space-2xs: calc(var(--space-unit) * 1);       /* 4px */
+  --space-xs:  calc(var(--space-unit) * 2);       /* 8px */
+  --space-sm:  calc(var(--space-unit) * 3);       /* 12px */
+  --space-md:  calc(var(--space-unit) * 4);       /* 16px */
+  --space-lg:  calc(var(--space-unit) * 6);       /* 24px */
+  --space-xl:  calc(var(--space-unit) * 8);       /* 32px */
+  --space-2xl: calc(var(--space-unit) * 12);      /* 48px */
+  --space-3xl: calc(var(--space-unit) * 16);      /* 64px */
+  --space-4xl: calc(var(--space-unit) * 24);      /* 96px */
+  --space-5xl: calc(var(--space-unit) * 32);      /* 128px */
+
+  /* Section padding — used for page sections */
+  --section-padding-y: var(--space-4xl);
+  --section-padding-x: var(--space-lg);
+
+  /* ──────────────────────────────────────────────────────────
+     BORDER RADIUS SCALE
+     ────────────────────────────────────────────────────────── */
+  --radius-xs:   calc(var(--radius-unit) * 1);    /* 4px */
+  --radius-sm:   calc(var(--radius-unit) * 2);    /* 8px */
+  --radius-md:   calc(var(--radius-unit) * 3);    /* 12px */
+  --radius-lg:   calc(var(--radius-unit) * 4);    /* 16px */
+  --radius-xl:   calc(var(--radius-unit) * 6);    /* 24px */
+  --radius-2xl:  calc(var(--radius-unit) * 8);    /* 32px */
+  --radius-full: 9999px;
+
+  /* ──────────────────────────────────────────────────────────
+     SHADOWS — Using OKLCH-derived shadow color for cohesion
+     The shadow color subtly tints to match the primary hue
+     ────────────────────────────────────────────────────────── */
+  --shadow-color: oklch(0.30 0.02 var(--hue-primary));
+  --shadow-sm:  0 1px 2px oklch(0.30 0.02 var(--hue-primary) / 0.08);
+  --shadow-md:  0 4px 12px oklch(0.25 0.02 var(--hue-primary) / 0.1);
+  --shadow-lg:  0 8px 24px oklch(0.20 0.03 var(--hue-primary) / 0.12);
+  --shadow-xl:  0 16px 48px oklch(0.15 0.03 var(--hue-primary) / 0.16);
+
+  /* ──────────────────────────────────────────────────────────
+     LAYOUT
+     ────────────────────────────────────────────────────────── */
+  --max-width: 1200px;
+  --max-width-narrow: 720px;
+}
+
+/* ================================================================
+   DARK THEME SEMANTIC OVERRIDES
+   
+   The magic: we swap WHICH primitive maps to WHICH role.
+   In light mode: primary = primary-40 (dark on light surface)
+   In dark mode:  primary = primary-80 (light on dark surface)
+   ================================================================ */
+[data-theme="dark"] {
+  --color-primary: var(--primary-80);
+  --color-on-primary: var(--primary-20);
+  --color-primary-container: var(--primary-30);
+  --color-on-primary-container: var(--primary-90);
+
+  --color-secondary: var(--secondary-80);
+  --color-on-secondary: var(--secondary-20);
+  --color-secondary-container: var(--secondary-30);
+
+  --color-accent: var(--accent-70);
+  --color-on-accent: var(--accent-30);
+  --color-accent-container: var(--accent-30);
+
+  --color-surface: var(--neutral-10);
+  --color-on-surface: var(--neutral-90);
+  --color-surface-dim: var(--neutral-5);
+  --color-surface-container: var(--neutral-20);
+  --color-surface-container-high: var(--neutral-30);
+
+  --color-background: var(--neutral-5);
+  --color-on-background: var(--neutral-90);
+
+  --color-outline: var(--neutral-60);
+  --color-outline-variant: var(--neutral-30);
+
+  /* Shadows are deeper in dark mode */
+  --shadow-sm:  0 1px 3px oklch(0.05 0.01 var(--hue-primary) / 0.3);
+  --shadow-md:  0 4px 12px oklch(0.03 0.01 var(--hue-primary) / 0.4);
+  --shadow-lg:  0 8px 24px oklch(0.02 0.02 var(--hue-primary) / 0.5);
+  --shadow-xl:  0 16px 48px oklch(0.01 0.02 var(--hue-primary) / 0.6);
+}
+
+/* High contrast — maximize readability */
+[data-theme="high-contrast"] {
+  --color-primary: var(--primary-40);
+  --color-on-primary: var(--neutral-100);
+  --color-surface: var(--neutral-100);
+  --color-on-surface: var(--neutral-0);
+  --color-background: var(--neutral-100);
+  --color-on-background: var(--neutral-0);
+  --color-outline: var(--neutral-20);
+  --color-outline-variant: var(--neutral-40);
+}

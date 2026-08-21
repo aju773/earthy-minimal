@@ -1,0 +1,26 @@
+/* ============================================================
+   GLOBAL CSS — Import order matters!
+   ============================================================
+   
+   🎯 IMPORT ORDER:
+   1. Fonts first (they're needed by everything)
+   2. Primitives (raw values — the foundation)
+   3. Semantic (maps primitives to meaning)
+   4. Components (maps semantics to component roles)
+   5. Animation (motion tokens)
+   6. Base (resets + utilities that USE all the above tokens)
+   
+   This order ensures each layer can reference the one above it.
+   ============================================================ */
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+/* Token layers — order matters */
+@import './tokens/primitives.css';
+@import './tokens/semantic.css';
+@import './tokens/components.css';
+@import './tokens/animation.css';
+
+/* Base styles that consume tokens */
+@import './base.css';

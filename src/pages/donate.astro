@@ -1,0 +1,131 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import ThemeSwitcher from '../components/ThemeSwitcher.astro';
+import DonationForm from '../components/DonationForm.astro';
+import Card from '../components/Card.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Footer from '../components/Footer.astro';
+
+const impactCards = [
+  {
+    icon: '🌿',
+    title: '92% Efficiency',
+    description: 'Your donation directly funds programs, not overhead. We maintain one of the highest efficiency ratings in conservation.',
+  },
+  {
+    icon: '🔒',
+    title: 'Secure & Tax-Deductible',
+    description: 'All donations are processed securely and are fully tax-deductible. You\'ll receive a receipt instantly.',
+  },
+  {
+    icon: '📈',
+    title: 'Track Your Impact',
+    description: 'Monthly reports showing exactly how your donation was used, with photos and data from the field.',
+  },
+];
+
+const testimonials = [
+  {
+    quote: 'Seeing the satellite images of the forest we helped restore was incredibly moving. EarthGuard makes you feel like your contribution truly matters.',
+    name: 'Emily Rodriguez',
+    role: 'Monthly Donor since 2019',
+    initials: 'ER',
+  },
+  {
+    quote: 'The transparency reports blew me away. I can literally track the animals my donation helped save. This is how every charity should work.',
+    name: 'David Kim',
+    role: 'Corporate Partner',
+    initials: 'DK',
+  },
+  {
+    quote: 'As a teacher, their educational programs are invaluable. My students are now passionate about conservation thanks to EarthGuard\'s materials.',
+    name: 'Priya Sharma',
+    role: 'Educator & Volunteer',
+    initials: 'PS',
+  },
+];
+---
+
+<Base title="Donate" description="Support EarthGuard's conservation work. Every dollar plants trees, saves wildlife, and protects ecosystems.">
+  <Nav>
+    <ThemeSwitcher slot="theme-switcher" />
+  </Nav>
+
+  <!-- Donate Hero -->
+  <section class="donate-hero section" id="donate-hero">
+    <div class="container">
+      <div class="donate-hero__content reveal">
+        <span class="text-caption">Support our mission</span>
+        <h1 class="text-heading-1">Every Dollar Plants Seeds of Change</h1>
+        <p class="text-body-lg">
+          Your generosity directly funds conservation projects, 
+          wildlife rescue operations, and environmental education around the world.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <DonationForm />
+
+  <!-- Impact Cards -->
+  <section class="impact section-alt" id="impact">
+    <div class="container">
+      <div class="impact__header reveal">
+        <span class="text-caption">Why donate with us</span>
+        <h2 class="text-heading-2">Your Trust Matters</h2>
+      </div>
+      <div class="impact__grid reveal-stagger">
+        {impactCards.map((card) => (
+          <div class="reveal">
+            <Card 
+              title={card.title} 
+              description={card.description} 
+              icon={card.icon}
+              variant="outlined"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Testimonials testimonials={testimonials} />
+
+  <Footer />
+</Base>
+
+<style>
+  .donate-hero {
+    padding-top: calc(var(--nav-height) + var(--space-4xl));
+    background: linear-gradient(
+      180deg,
+      var(--hero-gradient-start) 0%,
+      var(--color-background) 100%
+    );
+  }
+
+  .donate-hero__content {
+    max-width: var(--max-width-narrow);
+    text-align: center;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .impact__header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .impact__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+</style>

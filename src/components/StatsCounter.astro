@@ -1,0 +1,94 @@
+---
+interface Stat {
+  value: number;
+  suffix?: string;
+  label: string;
+}
+
+interface Props {
+  stats: Stat[];
+}
+
+const { stats } = Astro.props;
+---
+
+<section class="stats section" id="impact-stats">
+  <div class="container">
+    <div class="stats__header reveal">
+      <span class="text-caption">Our impact</span>
+      <h2 class="text-heading-2">Numbers That Matter</h2>
+    </div>
+    <div class="stats__grid reveal-stagger">
+      {stats.map((stat) => (
+        <div class="stats__card reveal">
+          <div class="stats__glass">
+            <span 
+              class="stats__value" 
+              data-counter={stat.value}
+              data-suffix={stat.suffix || ''}
+            >
+              0{stat.suffix || ''}
+            </span>
+            <span class="stats__label">{stat.label}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats__header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .stats__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .stats__card {
+    text-align: center;
+  }
+
+  .stats__glass {
+    /* 🔮 Glassmorphism — all token-driven */
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--card-radius);
+    padding: var(--space-2xl) var(--space-lg);
+    box-shadow: var(--glass-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    transition: 
+      transform var(--hover-duration) var(--hover-ease),
+      box-shadow var(--hover-duration) var(--hover-ease);
+  }
+
+  .stats__glass:hover {
+    transform: translateY(var(--card-hover-translate-y)) scale(var(--hover-scale));
+    box-shadow: var(--card-hover-shadow);
+  }
+
+  .stats__value {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-primary);
+    line-height: var(--line-height-tight);
+  }
+
+  .stats__label {
+    font-size: var(--font-size-sm);
+    color: var(--section-subheading-color);
+    font-weight: var(--font-weight-medium);
+  }
+</style>
