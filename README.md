@@ -1,43 +1,123 @@
-# Astro Starter Kit: Minimal
+# 🌿 astro-tailwind-conservation-site
 
-```sh
-npm create astro@latest -- --template minimal
+A wildlife conservation nonprofit landing site built with **Astro 7**, **Tailwind CSS v4**, and a 3-tier **OKLCH design token** architecture. Features dark/light theme switching, scroll-reveal animations, animated counters, glassmorphism cards, and a donation flow.
+
+> **Note:** This is a frontend concept site — no backend or payment processing. Built as a portfolio piece to demonstrate modern web design patterns.
+
+---
+
+## Preview
+
+| Page | Route | Description |
+|------|-------|-------------|
+| **Home** | `/` | Hero with particle animations, stats counter, program cards, CTA |
+| **About** | `/about` | Mission, values, team grid, milestone timeline |
+| **Donate** | `/donate` | Donation form, impact cards, testimonials |
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Framework | [Astro 7](https://astro.build) — static site generation, zero JS by default |
+| Styling | Tailwind CSS v4 — CSS-first config via `@theme`, no `tailwind.config.js` |
+| Color System | OKLCH — perceptually uniform color space (Material Design 3 approach) |
+| Fonts | Google Fonts (loaded via `@import`) |
+| Package Manager | pnpm |
+
+---
+
+## Design Token Architecture
+
+All visual values flow through a 3-tier token system. **Zero hardcoded colors, spacing, or timing in components.**
+
+```
+src/styles/
+├── tokens/
+│   ├── primitives.css     ← Tier 1: Raw OKLCH values, hue anchors (THE file to change)
+│   ├── semantic.css       ← Tier 2: Maps primitives to roles (--color-primary, --color-surface)
+│   ├── components.css     ← Tier 3: Per-component tokens (--button-bg, --card-shadow)
+│   └── animation.css      ← Motion tokens + prefers-reduced-motion
+├── base.css               ← Resets, typography, scroll-reveal, skeleton
+└── global.css             ← Tailwind import + @theme bridge + token imports
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Re-skinning the entire site
 
-## 🚀 Project Structure
+Change 3 numbers in `primitives.css`:
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```css
+--hue-primary: 145;    /* Forest Green → try 250 for Ocean Blue */
+--hue-secondary: 85;   /* Leafy yellow-green */
+--hue-accent: 45;      /* Warm amber/gold */
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Every button, card, hero gradient, and shadow transforms automatically.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+---
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Features
 
-## 🧞 Commands
+- **Dark/Light Theme** — Toggle via `data-theme` attribute; semantic tokens remap colors
+- **Scroll Reveal** — Intersection Observer-based entrance animations with stagger support
+- **Animated Counters** — Stats count up when scrolled into view
+- **Glassmorphism Cards** — Backdrop blur + translucent backgrounds via component tokens
+- **Particle Hero** — Floating OKLCH-derived gradient orbs with keyframe animations
+- **Responsive** — Mobile-first, fluid typography with `clamp()`
+- **Reduced Motion** — All animations respect `prefers-reduced-motion` via global token override
 
-All commands are run from the root of the project, from a terminal:
+---
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Project Structure
 
-## 👀 Want to learn more?
+```
+src/
+├── components/
+│   ├── Card.astro              ← Reusable card (glass/solid variants)
+│   ├── DonationForm.astro      ← Multi-tier donation form
+│   ├── Footer.astro
+│   ├── Hero.astro              ← Gradient hero with particle orbs
+│   ├── Nav.astro               ← Sticky nav with blur backdrop
+│   ├── StatsCounter.astro      ← Animated number counters
+│   ├── TeamGrid.astro          ← Team member cards
+│   ├── Testimonials.astro      ← Donor testimonial carousel
+│   ├── ThemeSwitcher.astro     ← Dark/light toggle
+│   └── Timeline.astro          ← Milestone timeline
+├── layouts/
+│   └── Base.astro              ← Global layout, SEO meta, script loading
+├── pages/
+│   ├── index.astro
+│   ├── about.astro
+│   └── donate.astro
+├── scripts/
+│   ├── counter-animation.js
+│   ├── scroll-reveal.js
+│   └── theme-switcher.js
+└── styles/
+    └── tokens/                 ← Design token architecture (see above)
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+---
+
+## Getting Started
+
+```bash
+# Install dependencies
+pnpm install
+
+# Start dev server (localhost:4321)
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Preview production build
+pnpm preview
+```
+
+---
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
